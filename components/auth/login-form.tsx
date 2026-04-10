@@ -11,22 +11,12 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { siteConfig } from "@/config/site"
-import { signIn } from "@/lib/auth-client"
+import { authClient, signIn } from "@/lib/auth-client"
 import { useState } from "react"
 
 import { FaGoogle, FaApple, FaFingerprint } from "react-icons/fa"
 import { LoadingSwap } from "@/components/ui/loading-swap"
 import SocialLoginButton from "@/components/auth/social-login-button"
-
-const socialProviders = [
-  { icon: <FaApple className="size-6" />, label: "Continue with Apple" },
-  { icon: <FaGoogle className="size-5" />, label: "Continue with Google" },
-  {
-    icon: <FaFingerprint className="size-5" />,
-    label: "Continue with Passkey",
-    onClick: () => signIn.passkey(),
-  },
-]
 
 export function LoginForm({
   className,
@@ -36,6 +26,37 @@ export function LoginForm({
   const [sent, setSent] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  async function handleSocialLogin(provider: "google" | "apple") {
+    setIsLoading(true)
+    setError(null)
+    const { error } = await authClient.signIn.social({
+      provider,
+      callbackURL: "/dashboard",
+    })
+    setIsLoading(false)
+    if (error) {
+      setError(error.message ?? "Something went wrong. Please try again.")
+    }
+  }
+
+  const socialProviders = [
+    {
+      icon: <FaApple className="size-6" />,
+      label: "Continue with Apple",
+      onClick: () => handleSocialLogin("google"),
+    },
+    {
+      icon: <FaGoogle className="size-5" />,
+      label: "Continue with Google",
+      onClick: () => handleSocialLogin("google"),
+    },
+    {
+      icon: <FaFingerprint className="size-5" />,
+      label: "Continue with Passkey",
+      onClick: () => signIn.passkey(),
+    },
+  ]
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()

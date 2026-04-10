@@ -51,13 +51,15 @@ export async function POST(request: Request) {
 
   if (decision.isDenied()) {
     if (decision.reason.isRateLimit()) {
-      return new Response("Too many attempts. Please try after some time.", {
-        status: 429,
-      })
+      return Response.json(
+        { message: "Too many attempts. Please try after some time." },
+        { status: 429 }
+      )
     } else if (decision.reason.isEmail()) {
-      return Response.json(getEmailErrorMessage(decision.reason.emailTypes), {
-        status: 400,
-      })
+      return Response.json(
+        { message: getEmailErrorMessage(decision.reason.emailTypes) },
+        { status: 400 }
+      )
     } else {
       return new Response(null, { status: 403 })
     }
