@@ -31,17 +31,32 @@ export function LoginForm({
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function handleSocialLogin(provider: "google" | "apple") {
+  async function withLoading(fn: () => Promise<void>) {
     setIsLoading(true)
     setError(null)
-    const { error } = await authClient.signIn.social({
-      provider,
-      callbackURL,
-    })
+    await fn()
     setIsLoading(false)
-    if (error) {
-      setError(error.message ?? "Something went wrong. Please try again.")
-    }
+  }
+
+  async function handleSocialLogin(provider: "google" | "apple") {
+    await withLoading(async () => {
+      const { error } = await authClient.signIn.social({
+        provider,
+        callbackURL,
+      })
+      if (error)
+        setError(error.message ?? "Something went wrong. Please try again.")
+    })
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault()
+    await withLoading(async () => {
+      const { error } = await signIn.magicLink({ email, callbackURL })
+      if (error)
+        setError(error.message ?? "Something went wrong. Please try again.")
+      else setSent(true)
+    })
   }
 
   const socialProviders = [
@@ -61,20 +76,6 @@ export function LoginForm({
       onClick: () => signIn.passkey(),
     },
   ]
-
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
-    const { error } = await signIn.magicLink({
-      email,
-      callbackURL,
-    })
-    setIsLoading(false)
-    if (error)
-      setError(error.message ?? "Something went wrong. Please try again.")
-    else setSent(true)
-  }
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
