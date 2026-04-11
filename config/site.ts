@@ -11,6 +11,7 @@ export const siteConfig = {
     noReply: "onboarding@resend.dev",
     support: "support@vitesse.com",
   },
+  genericUser: "User",
   mainNav: [
     {
       title: "Dashboard",

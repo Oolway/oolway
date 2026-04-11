@@ -1,5 +1,3 @@
-"use client"
-
 import { UserButton } from "@/components/auth/user-button"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"

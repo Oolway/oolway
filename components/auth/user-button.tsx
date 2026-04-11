@@ -14,6 +14,7 @@ import { authClient, useSession } from "@/lib/auth-client"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { publicRoutes } from "@/routes"
+import { siteConfig } from "@/config/site"
 
 function getInitials(name: string | null | undefined, email: string): string {
   if (name) {
@@ -65,14 +66,12 @@ export function UserButton() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <div className="px-2 py-1.5">
-          <p className="text-sm font-medium truncate">
-            {session.user.name || session.user.email}
+          <p className="text-sm font-semibold text-muted-foreground truncate">
+            {session.user.name || siteConfig.genericUser}
           </p>
-          {session.user.name && (
-            <p className="text-xs text-muted-foreground truncate">
-              {session.user.email}
-            </p>
-          )}
+          <p className="text-xs text-muted-foreground truncate">
+            {session.user.email}
+          </p>
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
