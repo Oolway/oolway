@@ -22,7 +22,7 @@ interface LoginFormProps extends React.ComponentProps<"div"> {
 
 export function LoginForm({
   className,
-  callbackURL = "/dashboard",
+  callbackURL = siteConfig.callbackAfterLogin,
   ...props
 }: LoginFormProps) {
   const [email, setEmail] = useState("")
