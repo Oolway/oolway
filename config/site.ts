@@ -1,9 +1,10 @@
+import { profile } from "console"
+import { features } from "process"
+
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: "Vitesse",
-  description:
-    "A high-performance Next.js SaaS boilerplate powered by Postgres, Redis, and BetterAuth.",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   domain: "vitesse.com",
   callbackAfterLogin: "/dashboard",
@@ -12,22 +13,43 @@ export const siteConfig = {
     support: "support@vitesse.com",
   },
   genericUser: "User",
-  mainNav: [
-    {
+  metaData: {
+    home: {
+      title: "Vitesse, The best starter for Next.js 16",
+      description:
+        "Vitesse is a Next.js 13 starter template with everything you need to build a modern web app, including authentication, database, and more.",
+    },
+    dashboard: {
       title: "Dashboard",
-      href: "/dashboard",
+      description: "Your personal dashboard.",
     },
-    {
-      title: "Components",
-      href: "/components",
+    profile: {
+      title: "Profile",
+      description: "Manage your profile data.",
     },
-    {
+    login: {
+      title: "Login",
+      description: "Sign in to your account.",
+    },
+    pricing: {
+      title: "Pricing",
+      description: "Choose the plan that works best for you.",
+    },
+    features: {
+      title: "Features",
+      description: "Explore the features of Vitesse.",
+    },
+    docs: {
       title: "Documentation",
-      href: "/docs",
+      description: "Find out how Vitesse works.",
     },
-  ],
-  links: {
-    github: "https://github.com/yourusername/vitesse",
-    author: "https://schandillia.com",
+    contact: {
+      title: "Contact",
+      description: "Get in touch with us.",
+    },
+    about: {
+      title: "About",
+      description: "Learn more about Vitesse.",
+    },
   },
 }

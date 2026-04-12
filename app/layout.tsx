@@ -4,10 +4,10 @@ import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    default: siteConfig.metaData.home.title,
+    template: `%s | ${siteConfig.metaData.home.title}`,
   },
-  description: siteConfig.description,
+  description: siteConfig.metaData.home.description,
 }
 
 export default function RootLayout({

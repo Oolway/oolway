@@ -1,8 +1,9 @@
+import { siteConfig } from "@/config/site"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Your personal dashboard.",
+  title: siteConfig.metaData.dashboard.title,
+  description: siteConfig.metaData.dashboard.description,
 }
 
 export default function DashboardPage() {

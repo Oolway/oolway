@@ -1,10 +1,11 @@
 import { LoginForm } from "@/components/auth/login-form"
 import { Card, CardContent } from "@/components/ui/card"
+import { siteConfig } from "@/config/site"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Login",
-  description: "Sign in to your account.",
+  title: siteConfig.metaData.login.title,
+  description: siteConfig.metaData.login.description,
 }
 
 export default async function LoginPage({

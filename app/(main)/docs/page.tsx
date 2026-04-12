@@ -1,8 +1,9 @@
+import { siteConfig } from "@/config/site"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Docs",
-  description: "Learn more about our documentation.",
+  title: siteConfig.metaData.docs.title,
+  description: siteConfig.metaData.docs.description,
 }
 
 export default function DocsPage() {

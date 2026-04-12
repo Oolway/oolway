@@ -1,8 +1,9 @@
+import { siteConfig } from "@/config/site"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Pricing",
-  description: "Learn more about our pricing plans.",
+  title: siteConfig.metaData.pricing.title,
+  description: siteConfig.metaData.pricing.description,
 }
 
 export default function PricingPage() {
