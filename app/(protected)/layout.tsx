@@ -2,7 +2,7 @@ import { Navbar } from "@/components/layout/navbar"
 import { LoginModalProvider } from "@/components/auth/login-modal-provider"
 import { Footer } from "@/components/layout/footer"
 
-export default function MainLayout({
+export default function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode
