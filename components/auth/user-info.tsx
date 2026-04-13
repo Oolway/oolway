@@ -1,12 +1,10 @@
 import { cn } from "@/lib/utils"
 
-interface User {
-  name?: string | null
-  email?: string | null
-}
-
 interface UserInfoProps {
-  user: User
+  user: {
+    name?: string | null
+    email?: string | null
+  }
   showEmail?: boolean
   className?: string
 }

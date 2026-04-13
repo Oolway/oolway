@@ -10,13 +10,11 @@ import { LayoutDashboardIcon, LogOutIcon, SettingsIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { UserInfo } from "@/components/auth/user-info"
 
-interface User {
-  name: string
-  email: string
-}
-
 interface UserDropdownContentProps {
-  user: User
+  user: {
+    name?: string | null
+    email?: string | null
+  }
   onSignOut: () => void
   variant?: "navbar" | "sidebar"
 }
