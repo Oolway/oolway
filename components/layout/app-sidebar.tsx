@@ -24,6 +24,7 @@ import { useUserMenu } from "@/components/auth/hooks/use-user-menu"
 import { usePathname } from "next/navigation"
 import { UserDropdownContent } from "@/components/auth/user-dropdown-content"
 import { UserAvatar } from "@/components/auth/user-avatar"
+import { UserInfo } from "@/components/auth/user-info"
 
 const navItems = [
   { href: "/profile", label: "Profile", icon: User },
@@ -85,14 +86,10 @@ export function AppSidebar() {
                     className="cursor-pointer rounded-4xl data-[active=false]:bg-transparent data-[active=false]:hover:bg-sidebar-accent/20 data-[active=false]:hover:text-sidebar-accent-foreground focus-visible:ring-1 focus-visible:ring-sidebar-accent/30"
                   >
                     <UserAvatar user={user} />
-                    <div className="flex flex-col min-w-0 text-left leading-tight">
-                      <span className="text-sm font-medium truncate">
-                        {user.name || siteConfig.genericUser}
-                      </span>
-                      <span className="text-xs text-muted-foreground truncate">
-                        {user.email}
-                      </span>
-                    </div>
+                    <UserInfo
+                      user={user}
+                      className="flex flex-col min-w-0 text-left leading-tight"
+                    />
                     <ChevronsUpDown className="ml-auto size-4 shrink-0" />
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>

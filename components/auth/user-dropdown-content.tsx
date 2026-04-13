@@ -9,6 +9,7 @@ import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { LayoutDashboardIcon, LogOutIcon, SettingsIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { UserInfo } from "@/components/auth/user-info"
 
 interface User {
   name: string
@@ -47,12 +48,7 @@ export function UserDropdownContent({
       {!isSidebar && (
         <>
           <div className="px-2 py-1.5">
-            <p className="text-sm font-semibold text-muted-foreground truncate">
-              {user.name || siteConfig.genericUser}
-            </p>
-            <p className="text-xs text-muted-foreground truncate">
-              {user.email}
-            </p>
+            <UserInfo user={user} />
           </div>
 
           <DropdownMenuSeparator />
