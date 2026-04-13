@@ -57,7 +57,7 @@ export function LoginForm({
     setError(err?.message ?? "Something went wrong. Please try again.")
   }
 
-  function handleSocialLogin(provider: "google" | "apple") {
+  function handleOneClickLogin(provider: "google" | "apple") {
     return () =>
       withLoading("other", async () => {
         const { error } = await authClient.signIn.social({
@@ -85,16 +85,16 @@ export function LoginForm({
     })
   }
 
-  const socialProviders = [
+  const oneClickProvider = [
     {
       icon: <FaApple className="size-6" />,
       label: "Continue with Apple",
-      onClick: handleSocialLogin("apple"),
+      onClick: handleOneClickLogin("apple"),
     },
     {
       icon: <FaGoogle className="size-5" />,
       label: "Continue with Google",
-      onClick: handleSocialLogin("google"),
+      onClick: handleOneClickLogin("google"),
     },
     {
       icon: <FaFingerprint className="size-5" />,
@@ -154,7 +154,7 @@ export function LoginForm({
               <div className="h-px flex-1 bg-border" />
             </div>
 
-            <OneClickLogin providers={socialProviders} disabled={isDisabled} />
+            <OneClickLogin providers={oneClickProvider} disabled={isDisabled} />
           </FieldGroup>
         </form>
       )}
