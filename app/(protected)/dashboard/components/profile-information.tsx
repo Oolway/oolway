@@ -7,12 +7,12 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { format } from "date-fns"
-import type { auth } from "@/lib/auth/auth"
 import { CalendarDaysIcon, ShieldIcon, UserIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { User } from "@/lib/auth/auth"
 
 interface ProfileInformationProps {
-  user: typeof auth.$Infer.Session.user
+  user: User
 }
 
 export function ProfileInformation({ user }: ProfileInformationProps) {
