@@ -45,7 +45,11 @@ export function UserButton() {
           <AvatarFallback>{getInitials(user.name, user.email)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <UserDropdownContent user={user} onSignOut={handleSignOut} align="end" />
+      <UserDropdownContent
+        user={user}
+        onSignOut={handleSignOut}
+        variant="navbar"
+      />
     </DropdownMenu>
   )
 }

@@ -94,7 +94,7 @@ export function AppSidebar() {
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton
                     size="lg"
-                    className="rounded-4xl data-[active=false]:bg-transparent data-[active=false]:hover:bg-sidebar-accent/20 data-[active=false]:hover:text-sidebar-accent-foreground"
+                    className="cursor-pointer rounded-4xl data-[active=false]:bg-transparent data-[active=false]:hover:bg-sidebar-accent/20 data-[active=false]:hover:text-sidebar-accent-foreground"
                   >
                     <Avatar className="size-6">
                       <AvatarImage
@@ -121,8 +121,7 @@ export function AppSidebar() {
                 <UserDropdownContent
                   user={user}
                   onSignOut={handleSignOut}
-                  align="start"
-                  side="top"
+                  variant="navbar"
                 />
               </DropdownMenu>
             )}

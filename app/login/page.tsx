@@ -33,7 +33,7 @@ export default async function LoginPage({
                 alt={`Illustration for ${siteConfig.name} login`}
                 className="absolute inset-0 h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
+              <div className="absolute inset-0 dark:bg-black/60" />
             </div>
             <LoginForm callbackURL={callbackURL} />
           </CardContent>

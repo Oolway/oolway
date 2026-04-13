@@ -7,55 +7,74 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
+import { LayoutDashboardIcon, LogOutIcon, SettingsIcon } from "lucide-react"
 
-type Props = {
-  user: {
-    name: string
-    email: string
-  }
-  onSignOut: () => void
-  align?: "start" | "end"
-  side?: "top" | "bottom"
+interface User {
+  name: string
+  email: string
 }
+
+interface UserDropdownContentProps {
+  user: User
+  onSignOut: () => void
+  variant?: "navbar" | "sidebar"
+}
+
+const menuItems = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
+  { href: "/settings", label: "Settings", icon: SettingsIcon },
+]
+
+const baseItemClass = "rounded-4xl focus:bg-sidebar-accent/20 cursor-pointer"
 
 export function UserDropdownContent({
   user,
   onSignOut,
-  align = "end",
-  side,
-}: Props) {
+  variant = "navbar",
+}: UserDropdownContentProps) {
+  const isSidebar = variant === "sidebar"
+
+  const align = isSidebar ? "start" : "end"
+  const side = isSidebar ? "top" : "bottom"
+
   return (
     <DropdownMenuContent align={align} side={side} className="w-48">
-      <div className="px-2 py-1.5">
-        <p className="text-sm font-semibold text-muted-foreground truncate">
-          {user.name || siteConfig.genericUser}
-        </p>
-        <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-      </div>
+      {/* Show only in navbar */}
+      {!isSidebar && (
+        <>
+          <div className="px-2 py-1.5">
+            <p className="text-sm font-semibold text-muted-foreground truncate">
+              {user.name || siteConfig.genericUser}
+            </p>
+            <p className="text-xs text-muted-foreground truncate">
+              {user.email}
+            </p>
+          </div>
+
+          <DropdownMenuSeparator />
+        </>
+      )}
+
+      {menuItems.map((item) => {
+        const Icon = item.icon
+        return (
+          <DropdownMenuItem key={item.href} asChild className={baseItemClass}>
+            <Link href={item.href} className="flex items-center gap-2">
+              <Icon className="size-4" />
+              <span>{item.label}</span>
+            </Link>
+          </DropdownMenuItem>
+        )
+      })}
 
       <DropdownMenuSeparator />
 
       <DropdownMenuItem
-        asChild
-        className="rounded-4xl focus:bg-sidebar-accent/20 cursor-pointer"
-      >
-        <Link href="/dashboard">Dashboard</Link>
-      </DropdownMenuItem>
-
-      <DropdownMenuItem
-        asChild
-        className="rounded-4xl focus:bg-sidebar-accent/20 cursor-pointer"
-      >
-        <Link href="/settings">Settings</Link>
-      </DropdownMenuItem>
-
-      <DropdownMenuSeparator />
-
-      <DropdownMenuItem
-        className="rounded-4xl focus:bg-sidebar-accent/20 cursor-pointer text-destructive focus:text-destructive"
+        className={`${baseItemClass} text-destructive focus:text-destructive flex items-center gap-2`}
         onClick={onSignOut}
       >
-        Sign out
+        <LogOutIcon className="size-4" />
+        <span>Sign out</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
   )
