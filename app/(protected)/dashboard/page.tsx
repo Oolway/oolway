@@ -1,5 +1,4 @@
 import { ProtectedPageTitle } from "@/app/(protected)/components/protected-page-title"
-import { ProfileInformation } from "@/app/(protected)/dashboard/components/profile-information"
 import { siteConfig } from "@/config/site"
 import { getServerSession } from "@/lib/auth/get-server-session"
 import type { Metadata } from "next"
@@ -21,7 +20,6 @@ export default async function DashboardPage() {
   return (
     <div className="container">
       <ProtectedPageTitle title="Dashboard" />
-      <ProfileInformation user={user} />
     </div>
   )
 }
