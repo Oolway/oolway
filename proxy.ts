@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server"
 import { auth } from "@/lib/auth/auth"
 import { CSP } from "@/lib/csp"
 import { publicRoutes, authRoutes, DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { siteConfig } from "@/config/site"
 
 const createUrl = (path: string, url: URL) => new URL(path, url)
 
@@ -15,7 +16,12 @@ export async function proxy(request: NextRequest) {
 
   // 1. Routing & Auth Logic
   if (!isPublicRoute) {
-    const session = await auth.api.getSession({ headers: request.headers })
+    const session = await auth.api.getSession({
+      headers: request.headers,
+      ...(siteConfig.logOutEverywhereInstantly && {
+        query: { disableCookieCache: true },
+      }),
+    })
     const isLoggedIn = !!session
 
     if (authRoutes.has(pathname)) {

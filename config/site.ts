@@ -11,6 +11,7 @@ export const siteConfig = {
   expiresInDays: 30,
   updateAgeInDays: 1,
   cookieMaxAgeInMinutes: 5,
+  logOutEverywhereInstantly: false,
   emails: {
     support: {
       sender: `${brandName} Team`,
@@ -38,6 +39,10 @@ export const siteConfig = {
     profile: {
       title: "Profile",
       description: "Manage your profile data.",
+    },
+    settings: {
+      title: "Settings",
+      description: "Manage your account settings.",
     },
     login: {
       title: "Login",

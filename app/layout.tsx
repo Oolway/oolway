@@ -3,6 +3,7 @@ import "./globals.css"
 import { siteConfig } from "@/config/site"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { Toaster } from "react-hot-toast"
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +27,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            {children}
+            <Toaster position="top-right" />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
