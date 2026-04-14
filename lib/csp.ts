@@ -1,4 +1,3 @@
-// lib/csp.ts
 const CSP_DIRECTIVES = {
   "default-src": ["'self'"],
   "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
@@ -7,7 +6,7 @@ const CSP_DIRECTIVES = {
     "'self'",
     "data:",
     "blob:",
-    "https://lh3.googleusercontent.com", // <-- Required for Google Avatars
+    "https://lh3.googleusercontent.com", // Required for Google Avatars
   ],
   "font-src": ["'self'"],
   "connect-src": ["'self'"],
