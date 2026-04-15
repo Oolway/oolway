@@ -7,6 +7,12 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+const THEMES = [
+  { value: "light", Icon: PiSun },
+  { value: "dark", Icon: PiMoonStars },
+  { value: "system", Icon: LuComputer },
+] as const
+
 interface ModeToggleProps {
   expanded?: boolean
 }
@@ -26,7 +32,6 @@ export function ModeToggle({ expanded = false }: ModeToggleProps) {
   }
 
   if (!mounted) {
-    // Return an invisible placeholder that matches the exact dimensions
     return expanded ? (
       <div className="h-9 w-full rounded-md bg-sidebar-accent/50 opacity-50" />
     ) : (
@@ -34,29 +39,21 @@ export function ModeToggle({ expanded = false }: ModeToggleProps) {
     )
   }
 
-  // 2. Now it is safe to render the Tabs because we are on the client
   if (expanded) {
     return (
-      <Tabs value={theme} onValueChange={(val) => setTheme(val)}>
-        <TabsList className="grid grid-cols-3 bg-sidebar-accent/50 p-1 rounded-full">
-          <TabsTrigger
-            value="light"
-            className="data-[state=active]:bg-background rounded-full  p-1"
-          >
-            <PiSun className="size-[18px]" />
-          </TabsTrigger>
-          <TabsTrigger
-            value="dark"
-            className="data-[state=active]:bg-background rounded-full  p-1"
-          >
-            <PiMoonStars className="size-[18px]" />
-          </TabsTrigger>
-          <TabsTrigger
-            value="system"
-            className="data-[state=active]:bg-background rounded-full p-1"
-          >
-            <LuComputer className="size-[18px]" />
-          </TabsTrigger>
+      <Tabs value={theme} onValueChange={setTheme}>
+        <TabsList className="grid grid-cols-3 rounded-full bg-sidebar-accent/50 p-1">
+          {/* 2. Map over the config for Tabs */}
+          {THEMES.map(({ value, Icon }) => (
+            <TabsTrigger
+              key={value}
+              value={value}
+              className="cursor-pointer rounded-full p-1 data-[state=active]:bg-background"
+              aria-label={`Theme: ${value}`}
+            >
+              <Icon className="size-[18px]" />
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
     )
@@ -64,7 +61,6 @@ export function ModeToggle({ expanded = false }: ModeToggleProps) {
 
   const baseClass = "text-[18px] transition-all duration-200 ease-in-out"
 
-  // 3. Render collapsed icon button
   return (
     <Button
       variant="ghost"
@@ -74,27 +70,16 @@ export function ModeToggle({ expanded = false }: ModeToggleProps) {
       title={`Theme: ${theme}`}
       className="relative"
     >
-      <PiSun
-        className={`${baseClass} ${
-          theme === "light"
-            ? "scale-100 opacity-100"
-            : "absolute scale-75 opacity-0"
-        }`}
-      />
-      <PiMoonStars
-        className={`${baseClass} ${
-          theme === "dark"
-            ? "scale-100 opacity-100"
-            : "absolute scale-75 opacity-0"
-        }`}
-      />
-      <LuComputer
-        className={`${baseClass} ${
-          theme === "system"
-            ? "scale-100 opacity-100"
-            : "absolute scale-75 opacity-0"
-        }`}
-      />
+      {THEMES.map(({ value, Icon }) => (
+        <Icon
+          key={value}
+          className={`${baseClass} ${
+            theme === value
+              ? "scale-100 opacity-100"
+              : "absolute scale-75 opacity-0"
+          }`}
+        />
+      ))}
     </Button>
   )
 }
