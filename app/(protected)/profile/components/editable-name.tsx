@@ -77,7 +77,7 @@ export function EditableName({ initialName }: EditableNameProps) {
           <button
             type="button"
             onClick={() => setIsEditing(true)}
-            className="cursor-text group flex w-full items-center justify-center md:justify-start gap-2 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring overflow-hidden before:block before:w-4 before:shrink-0 md:before:hidden"
+            className="cursor-text group flex w-full items-center justify-center md:justify-start gap-4 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring overflow-hidden before:block before:w-4 before:shrink-0 md:before:hidden"
             aria-label="Edit name"
           >
             <span className="truncate min-w-0">{name}</span>
