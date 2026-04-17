@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib"
 import * as s3 from "aws-cdk-lib/aws-s3"
 import * as iam from "aws-cdk-lib/aws-iam"
 import { Construct } from "constructs"
+import { siteConfig } from "@/config/site"
 
 export class S3StorageConstruct extends Construct {
   // Expose the bucket so other modules can use it
@@ -10,8 +11,12 @@ export class S3StorageConstruct extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id)
 
+    const stage =
+      cdk.Stack.of(this).stackName.split("-").pop()?.toLowerCase() ?? "dev"
+
     // 1. The Bucket
     this.bucket = new s3.Bucket(this, "UserUploadsBucket", {
+      bucketName: `${siteConfig.name.toLowerCase()}-${cdk.Stack.of(this).account}-${stage}-uploads`,
       publicReadAccess: true,
       blockPublicAccess: new s3.BlockPublicAccess({
         blockPublicAcls: false,

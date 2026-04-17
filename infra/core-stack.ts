@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib"
 import { Construct } from "constructs"
-import { S3StorageConstruct } from "./constructs/s3-storage"
-// import { CloudFrontCdnConstruct } from "./constructs/cloudfront-cdn" // Ready for later!
+import { S3StorageConstruct } from "@/infra/constructs/s3-storage"
+// import { CloudFrontCdnConstruct } from "@/infra/constructs/cloudfront-cdn" // Ready for later!
 
 export class CoreInfrastructureStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
