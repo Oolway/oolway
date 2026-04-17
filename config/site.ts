@@ -11,7 +11,7 @@ export const siteConfig = {
   expiresInDays: 30,
   updateAgeInDays: 1,
   cookieMaxAgeInMinutes: 5,
-  logOutEverywhereInstantly: false,
+  logOutEverywhereInstantly: true,
   avatarSizeLimitInMB: 5,
   emails: {
     support: {

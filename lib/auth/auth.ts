@@ -9,6 +9,7 @@ import { renderMagicLinkEmail } from "@/emails/magic-link"
 import { siteConfig } from "@/config/site"
 import { nextCookies } from "better-auth/next-js"
 import { renderWelcomeEmail } from "@/emails/welcome"
+import { redis } from "@/lib/redis"
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
@@ -67,6 +68,30 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,
+  }),
+  // Caching layer with redis
+  ...(redis && {
+    secondaryStorage: {
+      get: async (key) => {
+        const value = await redis!.get(key)
+        // Upstash parses JSON automatically, but Better-Auth expects a string back
+        return value
+          ? typeof value === "string"
+            ? value
+            : JSON.stringify(value)
+          : null
+      },
+      set: async (key, value, ttl) => {
+        if (ttl) {
+          await redis!.set(key, value, { ex: ttl })
+        } else {
+          await redis!.set(key, value)
+        }
+      },
+      delete: async (key) => {
+        await redis!.del(key)
+      },
+    },
   }),
 })
 
