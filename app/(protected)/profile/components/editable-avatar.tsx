@@ -8,6 +8,7 @@ import { uploadAvatarAction } from "@/app/actions/upload-avatar"
 import { authClient } from "@/lib/auth/auth-client" // Adjust path to your BetterAuth client
 import toast from "react-hot-toast" // Updated to react-hot-toast
 import { useRouter } from "next/navigation"
+import { siteConfig } from "@/config/site"
 
 interface EditableAvatarProps {
   user: User
@@ -26,8 +27,10 @@ export function EditableAvatar({ user, className }: EditableAvatarProps) {
     if (!file) return
 
     // Optional: Check file size (e.g., limit to 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be smaller than 5MB")
+    if (file.size > siteConfig.avatarSizeLimitInMB * 1024 * 1024) {
+      toast.error(
+        `Image must be smaller than ${siteConfig.avatarSizeLimitInMB}MB`
+      )
       return
     }
 

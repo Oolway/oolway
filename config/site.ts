@@ -12,6 +12,7 @@ export const siteConfig = {
   updateAgeInDays: 1,
   cookieMaxAgeInMinutes: 5,
   logOutEverywhereInstantly: false,
+  avatarSizeLimitInMB: 5,
   emails: {
     support: {
       sender: `${brandName} Team`,
