@@ -18,6 +18,13 @@ export class CoreInfrastructureStack extends cdk.Stack {
       ],
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      publicReadAccess: true,
+      blockPublicAccess: new s3.BlockPublicAccess({
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      }),
     })
 
     // 2. The Restricted IAM User (The Employee)

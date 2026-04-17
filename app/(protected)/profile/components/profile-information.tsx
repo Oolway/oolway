@@ -6,6 +6,7 @@ import { User } from "@/lib/auth/auth"
 import { format, formatDistanceToNow } from "date-fns"
 import { ShieldIcon, CalendarIcon, ClockIcon } from "lucide-react"
 import { EditableName } from "./editable-name"
+import { EditableAvatar } from "@/app/(protected)/profile/components/editable-avatar"
 
 interface ProfileInformationProps {
   user: User
@@ -46,7 +47,10 @@ export function ProfileInformation({ user }: ProfileInformationProps) {
             {/* Left Column: Avatar & Badge */}
             <div className="flex shrink-0 flex-col items-center gap-4">
               <div className="rounded-full ring-4 ring-foreground/40">
-                <UserAvatar user={user} className="size-36 md:size-60" />
+                <EditableAvatar
+                  user={user}
+                  className="size-36 md:size-60"
+                />{" "}
               </div>
             </div>
 
