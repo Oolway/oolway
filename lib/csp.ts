@@ -12,7 +12,13 @@ const CSP_DIRECTIVES = {
     `https://*.s3.${awsRegion}.amazonaws.com/avatars/`, // Required for S3 Avatar links not behind CDN
   ],
   "font-src": ["'self'"],
-  "connect-src": ["'self'"],
+  "connect-src": [
+    "'self'",
+    "https://*.sentry.io",
+    "https://*.ingest.sentry.io",
+    "https://*.ingest.us.sentry.io",
+  ],
+  "worker-src": ["'self'", "blob:"],
   "frame-src": ["'self'"],
   "frame-ancestors": ["'none'"],
   "form-action": ["'self'"],

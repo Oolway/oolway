@@ -23,6 +23,7 @@ export const publicRoutes = new Set([
   "/contact",
   "/robots.txt",
   "/sitemap.xml",
+  ...(siteConfig.sentry.enabled ? ["/monitoring"] : []),
 ])
 
 export const authRoutes = new Set(["/login"])

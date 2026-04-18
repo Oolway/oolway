@@ -14,6 +14,13 @@ export const siteConfig = {
   logOutEverywhereInstantly: true,
   enableSessionWatcher: true,
   avatarSizeLimitInMB: 5,
+  sentry: {
+    enabled: false,
+    tracesSampleRate: 1.0, // lower in production, e.g. 0.1
+    replaysSessionSampleRate: 0.1, // 10% of sessions
+    replaysOnErrorSampleRate: 1.0, // 100% of sessions with errors
+    sendDefaultPii: true,
+  },
   emails: {
     support: {
       sender: `${brandName} Team`,
