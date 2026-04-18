@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "react-hot-toast"
+import { SessionWatcher } from "@/lib/auth/session-watcher"
 
 export const metadata: Metadata = {
   title: {
@@ -28,6 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider>
+            {siteConfig.enableSessionWatcher && <SessionWatcher />}
             {children}
             <Toaster position="top-right" />
           </TooltipProvider>
