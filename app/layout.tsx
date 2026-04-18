@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "react-hot-toast"
 import { SessionWatcher } from "@/lib/auth/session-watcher"
+import { PostHogProvider } from "@/components/providers/posthog-provider"
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <body className="min-h-full flex flex-col">
+        <PostHogProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -34,6 +36,7 @@ export default function RootLayout({
             <Toaster position="top-right" />
           </TooltipProvider>
         </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   )

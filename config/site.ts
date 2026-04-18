@@ -21,6 +21,7 @@ export const siteConfig = {
     replaysOnErrorSampleRate: 1.0, // 100% of sessions with errors
     sendDefaultPii: true,
   },
+  enablePostHog: true,
   emails: {
     support: {
       sender: `${brandName} Team`,

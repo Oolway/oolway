@@ -1,20 +1,43 @@
-import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs"
 import type { NextConfig } from "next"
+
+// 1. Read the host variable (fallback to US if missing)
+const posthogHost =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
+
+// 2. Dynamically construct the asset host by injecting "-assets" into the domain string
+const posthogAssetHost = posthogHost.replace(
+  ".i.posthog.com",
+  "-assets.i.posthog.com"
+)
 
 const nextConfig: NextConfig = {
   experimental: {
     authInterrupts: true,
   },
-  /* config options here */
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/ingest/static/:path*",
+          destination: `${posthogAssetHost}/static/:path*`,
+        },
+        {
+          source: "/ingest/:path*",
+          destination: `${posthogHost}/:path*`,
+        },
+      ],
+    }
+  },
 }
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: "vitesse-2v",
+  org: "vitesse",
 
-  project: "tickets",
+  project: "javascript-nextjs",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -43,5 +66,5 @@ export default withSentryConfig(nextConfig, {
       // Automatically tree-shake Sentry logger statements to reduce bundle size
       removeDebugLogging: true,
     },
-  }
-});
+  },
+})
