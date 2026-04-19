@@ -59,6 +59,10 @@ export const siteConfig = {
       sender: `${brandName} Accounts`,
       fromEmail: "onboarding@resend.dev",
     },
+    privacy: {
+      sender: `${brandName} Privacy Officer`,
+      toEmail: `privacy@${brandDomain}`,
+    },
   },
   genericUser: "User",
   metaData: {
@@ -101,6 +105,10 @@ export const siteConfig = {
     about: {
       title: "About",
       description: `Learn more about ${brandName}.`,
+    },
+    cookies: {
+      title: "Cookies",
+      description: "Learn more about cookies.",
     },
   },
 }
