@@ -17,7 +17,7 @@ jobs:
   check:
     name: Type check, lint, build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     env:
       CI: true
@@ -46,21 +46,21 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: "bun-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}"
+          key: "bun-${{ runner.os }}-${{ hashFiles('**/bun.lock') }}"
           restore-keys: "bun-${{ runner.os }}-"
 
       - name: Cache node_modules
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: "modules-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}"
+          key: "modules-${{ runner.os }}-${{ hashFiles('**/bun.lock') }}"
           restore-keys: "modules-${{ runner.os }}-"
 
       - name: Cache Next.js build
         uses: actions/cache@v4
         with:
           path: .next/cache
-          key: "next-${{ runner.os }}-${{ hashFiles('**/bun.lockb', 'app/**/*', 'components/**/*', 'pages/**/*') }}"
+          key: "next-${{ runner.os }}-${{ hashFiles('**/bun.lock', 'app/**/*', 'components/**/*') }}"
           restore-keys: "next-${{ runner.os }}-"
 
       - name: Install dependencies

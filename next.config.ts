@@ -35,9 +35,9 @@ export default withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: "vitesse",
+  org: "vitesse-2v", // Must match the actual organization slug in Sentry settings
 
-  project: "javascript-nextjs",
+  project: "tickets", // Must match the actual project slug in Sentry settings
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
