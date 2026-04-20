@@ -36,11 +36,13 @@ export default withSentryConfig(nextConfig, {
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
   org: "vitesse-2v", // Must match the actual organization slug in Sentry settings
-
   project: "tickets", // Must match the actual project slug in Sentry settings
-
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
+  // Skip source map uploads in CI — SENTRY_AUTH_TOKEN is a dummy value there
+  sourcemaps: {
+    disable: process.env.CI === "true",
+  },
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
