@@ -26,10 +26,17 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    updateConsent()
+    // Initial load — inline to satisfy linter
+    getConsent().then(setConsent)
 
-    window.addEventListener("consentUpdated", updateConsent)
-    return () => window.removeEventListener("consentUpdated", updateConsent)
+    // Subsequent updates via event — callback pattern is fine
+    const handleConsentUpdate = () => {
+      getConsent().then(setConsent)
+    }
+
+    window.addEventListener("consentUpdated", handleConsentUpdate)
+    return () =>
+      window.removeEventListener("consentUpdated", handleConsentUpdate)
   }, [])
 
   return (

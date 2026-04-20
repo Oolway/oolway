@@ -28,7 +28,7 @@ export function CookieBanner() {
       }
     }
     check()
-  }, [])
+  }, [pathname])
 
   async function handleSave(acceptAll?: boolean) {
     await save(acceptAll)
@@ -41,7 +41,7 @@ export function CookieBanner() {
   return (
     <aside
       className={`
-        fixed inset-x-4 bottom-4 z-50 rounded-2xl border bg-background p-4 shadow-lg
+        fixed inset-x-4 bottom-4 z-50 rounded-2xl border bg-background p-4 shadow-xs
         sm:inset-auto sm:right-6 sm:bottom-6 sm:w-full sm:max-w-sm
         transition-all duration-300 ease-in-out
         ${visible ? "opacity-100 translate-x-0" : "opacity-100 translate-x-[calc(100%+24px)]"}

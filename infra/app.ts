@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib"
-import { CoreInfrastructureStack } from "./core-stack"
 import { siteConfig } from "@/config/site"
+import { CoreInfrastructureStack } from "@/infra/core-stack"
 
 const app = new cdk.App()
 

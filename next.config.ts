@@ -1,4 +1,4 @@
-import { env } from "./env"
+import { env } from "@/env"
 import { withSentryConfig } from "@sentry/nextjs"
 import type { NextConfig } from "next"
 

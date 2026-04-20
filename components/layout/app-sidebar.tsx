@@ -47,6 +47,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
       {/* Header — brand */}
       <SidebarHeader className="flex flex-row items-center justify-between px-2 py-1.5 group-data-[collapsible=icon]:justify-center">
         <Link href="/" className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/brand-logo.svg"
             alt={siteConfig.brand.name}

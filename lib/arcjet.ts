@@ -16,13 +16,19 @@ export const ajAuth = arcjet({
 })
 
 // 3. Universal Error Parser: Use this anywhere Arcjet blocks a request
-// Note: We use `any` or import the specific Decision type from Arcjet if preferred
-export function getArcjetErrorMessage(decision: any): string {
+type ArcjetDecision = {
+  reason: {
+    isRateLimit: () => boolean
+    isEmail: () => boolean
+    emailTypes?: string[]
+  }
+}
+export function getArcjetErrorMessage(decision: ArcjetDecision): string {
   if (decision.reason.isRateLimit()) {
     return "Too many attempts. Please try again later."
   }
   if (decision.reason.isEmail()) {
-    const types = decision.reason.emailTypes
+    const types = decision.reason.emailTypes ?? []
     if (types.includes("INVALID")) return "Invalid email address."
     if (types.includes("NO_MX_RECORDS")) return "Email domain not valid."
     if (types.includes("DISPOSABLE"))

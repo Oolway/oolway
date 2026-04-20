@@ -8,6 +8,7 @@ export class CoreInfrastructureStack extends cdk.Stack {
     super(scope, id, props)
 
     // Snap in the Storage Module
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const storage = new S3StorageConstruct(this, "StorageModule")
 
     /* LATER: When AWS verifies your account, you can snap in the CDN module

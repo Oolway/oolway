@@ -1,12 +1,11 @@
-import { UserAvatar } from "@/components/auth/user-avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { User } from "@/lib/auth/auth"
 import { format, formatDistanceToNow } from "date-fns"
 import { ShieldIcon, CalendarIcon, ClockIcon } from "lucide-react"
-import { EditableName } from "./editable-name"
 import { EditableAvatar } from "@/app/(protected)/profile/components/editable-avatar"
+import { EditableName } from "@/app/(protected)/profile/components/editable-name"
 
 interface ProfileInformationProps {
   user: User

@@ -40,20 +40,21 @@ export default function Home() {
           Section heading, level four
         </h4>
         <p className="leading-7 text-base max-w-prose">
-          This is body text. It uses your theme's foreground color and Open
-          Sans. Long paragraphs should feel comfortable and readable at this
-          size and line height.
+          This is body text. It uses your theme&rsquo;s foreground color and
+          Open Sans. Long paragraphs should feel comfortable and readable at
+          this size and line height.
         </p>
         <p className="text-sm text-muted-foreground max-w-prose">
           Small muted text — useful for captions, helper text, timestamps, and
-          secondary descriptions that shouldn't compete with primary content.
+          secondary descriptions that shouldn&rsquo;t compete with primary
+          content.
         </p>
         <p className="text-xs text-muted-foreground font-mono">
           Monospaced · IBM Plex Mono · xs size · for code, metadata, labels
         </p>
         <blockquote className="border-l-4 border-primary pl-6 italic text-muted-foreground font-serif text-lg">
-          "Design is not just what it looks like and feels like. Design is how
-          it works."
+          &ldquo;Design is not just what it looks like and feels like. Design is
+          how it works.&rdquo;
         </blockquote>
         <div className="flex flex-wrap gap-2 items-baseline">
           <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full font-mono">
@@ -214,7 +215,7 @@ export default function Home() {
             <CardContent>
               <p className="text-sm text-muted-foreground">
                 Footer area is great for primary actions or navigation links
-                related to the card's content.
+                related to the card&rsquo;s content.
               </p>
             </CardContent>
             <CardFooter>

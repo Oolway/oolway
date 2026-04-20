@@ -11,10 +11,13 @@ export function SessionWatcher() {
   const isPublicRoute = publicRoutes.has(pathname)
 
   // Keep track of the last time the user touched the mouse or keyboard
-  const lastActivityRef = useRef<number>(Date.now())
+  const lastActivityRef = useRef<number>(0)
 
   useEffect(() => {
     if (isPublicRoute) return
+
+    // Initialize activity timestamp when effect runs
+    lastActivityRef.current = Date.now()
 
     // 1. Idle Tracking
     const updateActivity = () => {
