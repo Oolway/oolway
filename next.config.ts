@@ -39,9 +39,13 @@ export default withSentryConfig(nextConfig, {
   project: "tickets", // Must match the actual project slug in Sentry settings
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
-  // Skip source map uploads in CI — SENTRY_AUTH_TOKEN is a dummy value there
+  // Skip source map uploads and release creation in CI — SENTRY_AUTH_TOKEN is a dummy value there
   sourcemaps: {
     disable: process.env.CI === "true",
+  },
+  release: {
+    create: process.env.CI !== "true",
+    finalize: process.env.CI !== "true",
   },
 
   // For all available options, see:
