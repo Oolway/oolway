@@ -1,10 +1,13 @@
 name: CI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches: ["**"]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -17,7 +20,6 @@ jobs:
     timeout-minutes: 10
 
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       CI: true
       NEXT_PUBLIC_APP_URL: http://localhost:3000
       BETTER_AUTH_URL: http://localhost:3000
@@ -47,11 +49,18 @@ jobs:
           key: "bun-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}"
           restore-keys: "bun-${{ runner.os }}-"
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: "modules-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}"
+          restore-keys: "modules-${{ runner.os }}-"
+
       - name: Cache Next.js build
         uses: actions/cache@v4
         with:
           path: .next/cache
-          key: "next-${{ runner.os }}-${{ hashFiles('**/*.{js,ts,tsx,jsx}') }}"
+          key: "next-${{ runner.os }}-${{ hashFiles('**/bun.lockb', 'app/**/*', 'components/**/*', 'pages/**/*') }}"
           restore-keys: "next-${{ runner.os }}-"
 
       - name: Install dependencies
