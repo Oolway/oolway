@@ -1,6 +1,7 @@
 import { UserButton } from "@/components/auth/user-button"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
+import type { Session } from "@/lib/auth/auth"
 
 const navLinks = [
   { href: "/features", label: "Features" },
@@ -8,7 +9,11 @@ const navLinks = [
   { href: "/docs", label: "Docs" },
 ]
 
-export function Navbar() {
+interface NavbarProps {
+  session: Session | null
+}
+
+export function Navbar({ session }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
@@ -39,7 +44,7 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-          <UserButton />
+          <UserButton session={session} />
         </div>
       </div>
     </header>

@@ -55,9 +55,7 @@ export default function HomePage() {
 
         <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
           {/* Replace with your product description */}
-          {siteConfig.brand.name} helps teams move faster, collaborate smarter,
-          and ship with confidence. Everything you need, nothing you
-          don&rsquo;t.
+          {`${siteConfig.brand.name} helps teams move faster, collaborate smarter, and ship with confidence. Everything you need, nothing you don’t.`}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">
