@@ -20,7 +20,7 @@ export function CookieBanner() {
   useEffect(() => {
     async function check() {
       if (pathname === "/cookies") return
-      const { getConsent } = await import("@/app/actions/consent")
+      const { getConsent } = await import("@/actions/consent")
       const consent = await getConsent()
       if (!consent) {
         setShow(true)

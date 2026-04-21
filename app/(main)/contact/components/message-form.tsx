@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import { LoadingSwap } from "@/components/ui/loading-swap"
 import { SendIcon, CheckCircleIcon } from "lucide-react"
 import toast from "react-hot-toast"
-import { sendContactEmailAction } from "@/app/actions/send-contact-email"
+import { sendContactEmailAction } from "@/actions/send-contact-email"
 import Link from "next/link"
 import {
   contactFormSchema,

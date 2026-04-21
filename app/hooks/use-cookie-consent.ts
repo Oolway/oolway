@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getConsent, setConsent } from "@/app/actions/consent"
+import { getConsent, setConsent } from "@/actions/consent"
 
 export function useCookieConsent() {
   const [analytics, setAnalytics] = useState(false)

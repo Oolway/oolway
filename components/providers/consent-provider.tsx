@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-import { getConsent, type Consent } from "@/app/actions/consent"
+import { getConsent, type Consent } from "@/actions/consent"
 
 interface ConsentContextValue {
   consent: Consent | null
