@@ -123,7 +123,7 @@ export function LoginForm({
               <Input
                 id="email"
                 type="email"
-                placeholder="example@vitesse.com"
+                placeholder="albert@einstein.com"
                 required
                 disabled={isDisabled}
                 value={email}

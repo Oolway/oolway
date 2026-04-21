@@ -1,7 +1,7 @@
 import { env } from "@/env"
 
-const BRANDNAME = "Vitesse"
-const BRANDDOMAIN = "vitesse.com"
+const BRANDNAME = "Oolway"
+const BRANDDOMAIN = "oolway.com"
 const EMAILSENDERNAME = "Amit"
 
 export const siteConfig = {

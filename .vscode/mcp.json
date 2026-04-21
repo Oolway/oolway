@@ -1,7 +1,7 @@
 {
   "servers": {
     "Sentry": {
-      "url": "https://mcp.sentry.dev/mcp/vitesse-2v/tickets",
+      "url": "https://mcp.sentry.dev/mcp/oolway-2v/tickets",
       "type": "http"
     }
   }

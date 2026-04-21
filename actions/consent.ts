@@ -1,5 +1,6 @@
 "use server"
 
+import { siteConfig } from "@/config/site"
 import { cookies } from "next/headers"
 
 export type Consent = {
@@ -9,7 +10,7 @@ export type Consent = {
   updatedAt: string
 }
 
-const COOKIE_NAME = "vitesse_cookie_consent"
+const COOKIE_NAME = `${siteConfig.brand.name.toLowerCase()}_cookie_consent`
 
 export async function getConsent(): Promise<Consent | null> {
   const value = (await cookies()).get(COOKIE_NAME)?.value
