@@ -18,7 +18,13 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LayoutDashboard, Settings, ChevronsUpDown, User } from "lucide-react"
+import {
+  LayoutDashboardIcon,
+  SettingsIcon,
+  ShieldIcon,
+  ChevronsUpDownIcon,
+  User,
+} from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { UserDropdownContent } from "@/components/auth/user-dropdown-content"
@@ -30,8 +36,9 @@ import { ModeToggle } from "@/components/layout/mode-toggle"
 
 const navItems = [
   { href: "/profile", label: "Profile", icon: User },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
+  { href: "/security", label: "Security", icon: ShieldIcon },
+  { href: "/settings", label: "Settings", icon: SettingsIcon },
 ]
 
 interface AppSidebarProps {
@@ -125,7 +132,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
                         user={user}
                         className="flex flex-col min-w-0 text-left leading-tight"
                       />
-                      <ChevronsUpDown className="ml-auto size-4 shrink-0" />
+                      <ChevronsUpDownIcon className="ml-auto size-4 shrink-0" />
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
                   <UserDropdownContent

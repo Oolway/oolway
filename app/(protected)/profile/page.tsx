@@ -19,7 +19,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="container">
+    <div className="container space-y-5">
       <ProtectedPageTitle title="Profile" />
       <ProfileInformation user={user} />
     </div>

@@ -139,7 +139,7 @@ export default async function DashboardPage() {
   const firstName = user.name?.split(" ")[0] ?? "there"
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="container space-y-5">
       {/* Title + greeting */}
       <div className="flex flex-col gap-1">
         <ProtectedPageTitle title="Dashboard" />

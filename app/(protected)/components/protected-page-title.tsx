@@ -7,7 +7,7 @@ interface ProtectedPageTitleProps {
 
 export function ProtectedPageTitle({ title }: ProtectedPageTitleProps) {
   return (
-    <div className="flex items-center gap-3 mb-10">
+    <div className="flex items-center gap-3 mb-5">
       <SidebarTrigger className="md:hidden p-1 shrink-0">
         <MenuIcon className="size-8" />
       </SidebarTrigger>

@@ -12,19 +12,22 @@ import { Input } from "@/components/ui/input"
 import { siteConfig } from "@/config/site"
 import { authClient, signIn } from "@/lib/auth/auth-client"
 import { useState, useRef } from "react"
-import { FaGoogle, FaApple, FaFingerprint } from "react-icons/fa"
+import { FaGoogle, FaApple } from "react-icons/fa"
 import { LoadingSwap } from "@/components/ui/loading-swap"
 import { MagicLinkSent } from "@/components/auth/magic-link-sent"
 import { LoginFormHeader } from "@/components/auth/login-form-header"
-import { OneClickLogin } from "@/components/auth/one-click-login"
+import { SocialLogin } from "@/components/auth/social-login"
+import { useRouter } from "next/navigation"
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   callbackURL?: string
+  onSuccess?: () => void
 }
 
 export function LoginForm({
   className,
   callbackURL = siteConfig.authAndSession.callbackAfterLogin,
+  onSuccess,
   ...props
 }: LoginFormProps) {
   const [email, setEmail] = useState("")
@@ -34,6 +37,7 @@ export function LoginForm({
   )
   const [error, setError] = useState<string | null>(null)
   const isLoadingRef = useRef(false)
+  const router = useRouter()
 
   async function withLoading(
     action: "magic" | "other",
@@ -41,10 +45,8 @@ export function LoginForm({
   ) {
     if (isLoadingRef.current) return
     isLoadingRef.current = true
-
     setLoadingAction(action)
     setError(null)
-
     try {
       await fn()
     } finally {
@@ -68,16 +70,8 @@ export function LoginForm({
       })
   }
 
-  function handlePasskey() {
-    withLoading("other", async () => {
-      const { error } = await signIn.passkey()
-      if (error) handleError(error)
-    })
-  }
-
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
-
     await withLoading("magic", async () => {
       const { error } = await signIn.magicLink({ email, callbackURL })
       if (error) handleError(error)
@@ -85,7 +79,7 @@ export function LoginForm({
     })
   }
 
-  const oneClickProvider = [
+  const socialProviders = [
     {
       icon: <FaApple className="size-6" />,
       label: "Continue with Apple",
@@ -96,18 +90,12 @@ export function LoginForm({
       label: "Continue with Google",
       onClick: handleOneClickLogin("google"),
     },
-    {
-      icon: <FaFingerprint className="size-5" />,
-      label: "Continue with Passkey",
-      onClick: handlePasskey,
-    },
   ]
 
   const isDisabled = loadingAction !== null
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      {/* Accessibility */}
       <span className="sr-only" aria-live="polite">
         {loadingAction ? "Signing in, please wait." : ""}
       </span>
@@ -127,6 +115,7 @@ export function LoginForm({
                 required
                 disabled={isDisabled}
                 value={email}
+                autoComplete="email"
                 onChange={(e) => {
                   setEmail(e.target.value)
                   setError(null)
@@ -140,7 +129,6 @@ export function LoginForm({
                   Send Login Link
                 </LoadingSwap>
               </Button>
-
               {error && (
                 <p className="text-sm text-destructive" aria-live="polite">
                   {error}
@@ -154,7 +142,15 @@ export function LoginForm({
               <div className="h-px flex-1 bg-border" />
             </div>
 
-            <OneClickLogin providers={oneClickProvider} disabled={isDisabled} />
+            <SocialLogin
+              providers={socialProviders}
+              disabled={isDisabled}
+              onSuccess={onSuccess}
+              onLoadingChange={(loading) =>
+                setLoadingAction(loading ? "other" : null)
+              }
+              callbackURL={callbackURL}
+            />
           </FieldGroup>
         </form>
       )}

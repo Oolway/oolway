@@ -26,9 +26,14 @@ export async function proxy(request: NextRequest) {
 
     if (authRoutes.has(pathname)) {
       if (isLoggedIn) {
-        response = NextResponse.redirect(
-          createUrl(DEFAULT_LOGIN_REDIRECT, nextUrl)
-        )
+        const callbackUrl = nextUrl.searchParams.get("callbackUrl")
+
+        const safeCallbackUrl =
+          callbackUrl && callbackUrl.startsWith("/")
+            ? callbackUrl
+            : DEFAULT_LOGIN_REDIRECT
+
+        response = NextResponse.redirect(createUrl(safeCallbackUrl, nextUrl))
       }
     } else if (!isLoggedIn) {
       const callbackUrl = `${pathname}${search}`

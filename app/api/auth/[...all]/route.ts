@@ -61,17 +61,22 @@ export async function POST(request: Request) {
 }
 
 async function checkArcjet(request: Request) {
-  const body = (await request.json()) as unknown
-  const session = await auth.api.getSession({ headers: request.headers })
+  let body: unknown = null
+  try {
+    body = await request.json()
+  } catch {
+    // not all auth requests have a JSON body — that's fine
+  }
 
+  const session = await auth.api.getSession({ headers: request.headers })
   const userIdOrIp = (session?.user.id ?? findIp(request)) || "127.0.0.1"
 
   if (new URL(request.url).pathname === "/api/auth/sign-in/magic-link") {
     if (
-      body &&
+      body !== null &&
       typeof body === "object" &&
       "email" in body &&
-      typeof body.email === "string"
+      typeof (body as Record<string, unknown>).email === "string"
     ) {
       return ajAuth
         .withRule(
@@ -81,7 +86,10 @@ async function checkArcjet(request: Request) {
             rateLimit: restrictiveRateLimitSettings,
           })
         )
-        .protect(request, { email: body.email, userIdOrIp })
+        .protect(request, {
+          email: (body as Record<string, unknown>).email as string,
+          userIdOrIp,
+        })
     } else {
       return ajAuth
         .withRule(detectBot(botSettings))

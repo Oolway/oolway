@@ -19,7 +19,7 @@ export default async function LoginPage({
   const callbackURL =
     rawCallbackUrl && rawCallbackUrl.startsWith("/")
       ? rawCallbackUrl
-      : "/dashboard"
+      : siteConfig.authAndSession.callbackAfterLogin
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">

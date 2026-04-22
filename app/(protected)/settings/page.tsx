@@ -1,5 +1,4 @@
 import { ProtectedPageTitle } from "@/app/(protected)/components/protected-page-title"
-import { LogOutEverywhereButton } from "@/app/(protected)/settings/components/log-out-everywhere-button"
 import { siteConfig } from "@/config/site"
 import { getServerSession } from "@/lib/auth/get-server-session"
 import type { Metadata } from "next"
@@ -21,7 +20,6 @@ export default async function SettingsPage() {
   return (
     <div className="container">
       <ProtectedPageTitle title="Settings" />
-      <LogOutEverywhereButton />
     </div>
   )
 }

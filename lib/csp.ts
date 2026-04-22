@@ -26,12 +26,15 @@ const CSP_DIRECTIVES = {
     "https://*.sentry.io",
     "https://*.ingest.sentry.io",
     "https://*.ingest.us.sentry.io",
+    posthogHost,
+    posthogAssetHost,
   ],
   "worker-src": ["'self'", "blob:"],
   "frame-src": ["'self'"],
   "frame-ancestors": ["'none'"],
   "form-action": ["'self'"],
-  ...(process.env.NODE_ENV === "production"
+  ...(process.env.NODE_ENV === "production" &&
+  env.NEXT_PUBLIC_APP_URL?.startsWith("https")
     ? { "upgrade-insecure-requests": [] }
     : {}),
 }

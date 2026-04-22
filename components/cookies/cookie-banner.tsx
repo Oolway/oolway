@@ -19,7 +19,7 @@ export function CookieBanner() {
 
   useEffect(() => {
     async function check() {
-      if (pathname === "/cookies") return
+      if (pathname === "/cookies" || pathname === "/login") return
       const { getConsent } = await import("@/actions/consent")
       const consent = await getConsent()
       if (!consent) {

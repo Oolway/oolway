@@ -48,7 +48,12 @@ export function LoginModalProvider({
           <DialogDescription className="sr-only">
             Enter your email below to receive a secure login link.
           </DialogDescription>
-          <LoginForm callbackURL={callbackURL} />
+          {open && (
+            <LoginForm
+              callbackURL={callbackURL}
+              onSuccess={() => setOpen(false)}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </LoginModalContext.Provider>

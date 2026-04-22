@@ -1,3 +1,4 @@
+import { PasskeyButton } from "@/components/auth/passkey-button"
 import { Button } from "@/components/ui/button"
 import { Field } from "@/components/ui/field"
 
@@ -7,15 +8,21 @@ type Provider = {
   onClick: () => void
 }
 
-interface OneClickLoginProps {
+interface SocialLoginProps {
   providers: Provider[]
   disabled?: boolean
+  onSuccess?: () => void
+  onLoadingChange?: (loading: boolean) => void
+  callbackURL?: string
 }
 
-export function OneClickLogin({
+export function SocialLogin({
   providers,
   disabled = false,
-}: OneClickLoginProps) {
+  onSuccess,
+  onLoadingChange,
+  callbackURL,
+}: SocialLoginProps) {
   return (
     <Field className="grid grid-cols-3 gap-4">
       {providers.map((provider) => (
@@ -30,6 +37,12 @@ export function OneClickLogin({
           <span className="sr-only">{provider.label}</span>
         </Button>
       ))}
+      <PasskeyButton
+        onSuccess={onSuccess}
+        disabled={disabled}
+        onLoadingChange={onLoadingChange}
+        callbackURL={callbackURL}
+      />
     </Field>
   )
 }

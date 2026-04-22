@@ -3,68 +3,78 @@
 import { useEffect, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { authClient } from "@/lib/auth/auth-client"
-import { publicRoutes } from "@/routes"
+import { authRoutes, publicRoutes } from "@/routes"
 
 export function SessionWatcher() {
   const router = useRouter()
   const pathname = usePathname()
-  const isPublicRoute = publicRoutes.has(pathname)
 
-  // Keep track of the last time the user touched the mouse or keyboard
-  const lastActivityRef = useRef<number>(0)
+  const shouldWatchSession =
+    !publicRoutes.has(pathname) && !authRoutes.has(pathname)
+
+  // Track last user activity
+  const lastActivityRef = useRef<number>(Date.now())
+
+  // Prevent duplicate redirects
+  const hasRedirectedRef = useRef(false)
 
   useEffect(() => {
-    if (isPublicRoute) return
+    if (!shouldWatchSession) return
 
-    // Initialize activity timestamp when effect runs
-    lastActivityRef.current = Date.now()
+    // Reset redirect guard on route change
+    hasRedirectedRef.current = false
 
-    // 1. Idle Tracking
     const updateActivity = () => {
       lastActivityRef.current = Date.now()
     }
 
-    // Attach lightweight listeners to track if the user is actually there
-    window.addEventListener("mousemove", updateActivity, { passive: true })
+    // Use pointer events (covers mouse + touch, lower noise than mousemove spam)
+    window.addEventListener("pointermove", updateActivity, { passive: true })
     window.addEventListener("keydown", updateActivity, { passive: true })
     window.addEventListener("click", updateActivity, { passive: true })
 
-    // 2. The Smart Poller
     const checkSession = async () => {
-      // RULE A: If the tab is hidden (minimized or behind another tab), stop polling.
+      // Prevent duplicate execution after redirect
+      if (hasRedirectedRef.current) return
+
+      // Skip if tab not visible
       if (document.visibilityState === "hidden") return
 
-      // RULE B: If the user hasn't moved the mouse in 5 minutes, they are idle/asleep. Stop polling.
+      // Skip if user idle
       if (Date.now() - lastActivityRef.current > 5 * 60 * 1000) return
 
-      // If we pass the rules, the user is active. Verify the session.
       const { data: session, error } = await authClient.getSession()
 
       if (error || !session) {
-        router.push("/login?session_expired=true")
+        hasRedirectedRef.current = true
+
+        router.replace(
+          `/login?session_expired=true&callbackUrl=${encodeURIComponent(pathname)}`
+        )
       }
     }
 
-    // TRIGGER 1: Check every 5 minutes ONLY IF active
+    // Poll every 5 minutes
     const intervalId = setInterval(checkSession, 5 * 60 * 1000)
 
-    // TRIGGER 2: Instant check the millisecond they switch back to the tab
+    // Run immediately when tab becomes active
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        updateActivity() // They are back, mark them active
+        updateActivity()
         checkSession()
       }
     }
+
     document.addEventListener("visibilitychange", handleVisibilityChange)
 
     return () => {
       clearInterval(intervalId)
-      window.removeEventListener("mousemove", updateActivity)
+      window.removeEventListener("pointermove", updateActivity)
       window.removeEventListener("keydown", updateActivity)
       window.removeEventListener("click", updateActivity)
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
-  }, [pathname, isPublicRoute, router])
+  }, [shouldWatchSession, router, pathname])
 
   return null
 }

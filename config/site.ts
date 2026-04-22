@@ -68,6 +68,10 @@ export const siteConfig = {
         title: "Profile",
         description: "Manage your profile data.",
       },
+      security: {
+        title: "Security",
+        description: "Manage your account security.",
+      },
       settings: {
         title: "Settings",
         description: "Manage your account settings.",
