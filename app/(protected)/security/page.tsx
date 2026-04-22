@@ -1,13 +1,6 @@
 import { ProtectedPageTitle } from "@/app/(protected)/components/protected-page-title"
 import { PasskeyManagement } from "@/app/(protected)/security/components/passkey-management"
 import { LogOutEverywhereButton } from "@/app/(protected)/settings/components/log-out-everywhere-button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { auth } from "@/lib/auth/auth"
 import { getServerSession } from "@/lib/auth/get-server-session"
