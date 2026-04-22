@@ -43,10 +43,10 @@ export default withSentryConfig(nextConfig, {
   sourcemaps: {
     disable: process.env.CI === "true",
   },
-  release: {
-    create: process.env.CI !== "true",
-    finalize: process.env.CI !== "true",
-  },
+  // release: {
+  //   create: process.env.CI !== "true",
+  //   finalize: process.env.CI !== "true",
+  // },
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
