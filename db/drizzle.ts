@@ -1,8 +1,8 @@
 import { env } from "@/env"
 import { config } from "dotenv"
 import { drizzle } from "drizzle-orm/neon-http"
-import * as authSchema from "./auth-schema"
-import * as blogSchema from "./blog-schema"
+import * as authSchema from "@/db/auth-schema"
+import * as blogSchema from "@/db/blog-schema"
 
 config({ path: ".env" })
 
