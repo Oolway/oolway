@@ -34,6 +34,7 @@ jobs:
       SENTRY_AUTH_TOKEN: dummy
       GOOGLE_CLIENT_ID: dummy
       GOOGLE_CLIENT_SECRET: dummy
+      NEXT_PUBLIC_CLOUDFRONT_URL: "https://dummy.cloudfront.net"
 
     steps:
       - uses: actions/checkout@v4

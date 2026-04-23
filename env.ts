@@ -54,7 +54,7 @@ export const env = createEnv({
     NEXT_PUBLIC_POSTHOG_HOST: z.url().optional(),
 
     // CloudFront
-    NEXT_PUBLIC_CLOUDFRONT_URL: z.url(),
+    NEXT_PUBLIC_CLOUDFRONT_URL: z.url().optional(),
   },
 
   runtimeEnv: {
