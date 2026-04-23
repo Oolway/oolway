@@ -1,22 +1,18 @@
 import * as cdk from "aws-cdk-lib"
 import { Construct } from "constructs"
 import { S3StorageConstruct } from "@/infra/constructs/s3-storage"
-// import { CloudFrontCdnConstruct } from "@/infra/constructs/cloudfront-cdn" // Ready for later!
+import { CloudFrontCdnConstruct } from "@/infra/constructs/cloudfront-cdn"
 
 export class CoreInfrastructureStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
-    // Snap in the Storage Module
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // 1. Private S3 bucket
     const storage = new S3StorageConstruct(this, "StorageModule")
 
-    /* LATER: When AWS verifies your account, you can snap in the CDN module
-      and easily pass the storage bucket into it as a property:
-
-      const cdn = new CloudFrontCdnConstruct(this, "CdnModule", {
-        originBucket: storage.bucket 
-      })
-    */
+    // 2. CloudFront CDN in front of the bucket
+    new CloudFrontCdnConstruct(this, "CdnModule", {
+      originBucket: storage.bucket,
+    })
   }
 }

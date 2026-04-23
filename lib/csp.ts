@@ -1,6 +1,6 @@
 import { env } from "@/env"
 
-const awsRegion = env.AWS_REGION || "ap-south-1"
+const cloudfrontUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL || ""
 
 const posthogHost = env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
 const posthogAssetHost = posthogHost.replace(
@@ -17,7 +17,7 @@ const CSP_DIRECTIVES = {
     "data:",
     "blob:",
     "https://lh3.googleusercontent.com", // Required for Google Avatars
-    `https://*.s3.${awsRegion}.amazonaws.com/avatars/`, // Required for S3 Avatar links not behind CDN
+    ...(cloudfrontUrl ? [cloudfrontUrl] : []),
     posthogAssetHost,
   ],
   "font-src": ["'self'"],

@@ -14,37 +14,25 @@ export class S3StorageConstruct extends Construct {
     const stage =
       cdk.Stack.of(this).stackName.split("-").pop()?.toLowerCase() ?? "dev"
 
-    // 1. The Bucket
+    // 1. Private bucket — no public access
     this.bucket = new s3.Bucket(this, "UserUploadsBucket", {
       bucketName: `${siteConfig.brand.name.toLowerCase()}-${cdk.Stack.of(this).account}-${stage}-uploads`,
-      publicReadAccess: true,
-      blockPublicAccess: new s3.BlockPublicAccess({
-        blockPublicAcls: false,
-        blockPublicPolicy: false,
-        ignorePublicAcls: false,
-        restrictPublicBuckets: false,
-      }),
-      cors: [
-        {
-          allowedMethods: [s3.HttpMethods.GET, s3.HttpMethods.PUT],
-          allowedOrigins: ["*"],
-          allowedHeaders: ["*"],
-        },
-      ],
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     })
 
-    // 2. The Restricted IAM User
+    // 2. IAM user for app: read/write access
     const appUser = new iam.User(this, "AppS3WorkerUser")
     this.bucket.grantReadWrite(appUser)
 
-    // 3. Create Access Keys
+    // 3. Access keys for the IAM user
     const accessKey = new iam.AccessKey(this, "AppWorkerAccessKey", {
       user: appUser,
     })
 
-    // 4. Outputs tied to this specific construct
+    // 4. Outputs
     new cdk.CfnOutput(this, "S3BucketName", {
       value: this.bucket.bucketName,
     })

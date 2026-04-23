@@ -50,13 +50,25 @@ export async function uploadAvatarAction(formData: FormData) {
       })
     )
 
-    const publicUrl = `https://${env.AWS_S3_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${uniqueFileName}`
+    const cdnBase = env.NEXT_PUBLIC_CLOUDFRONT_URL
+    const publicUrl = cdnBase
+      ? `${cdnBase}/${uniqueFileName}`
+      : `https://${env.AWS_S3_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${uniqueFileName}`
 
     // 4. CLEANUP: Delete the old file from S3
     // We do this AFTER the new upload succeeds to ensure the user isn't left empty-handed
-    if (oldImageUrl && oldImageUrl.includes("amazonaws.com")) {
+    if (oldImageUrl) {
       try {
-        const oldKey = oldImageUrl.split(".com/")[1]
+        let oldKey: string | undefined
+
+        if (oldImageUrl.includes("cloudfront.net")) {
+          // Extract key from CloudFront URL: https://xxxx.cloudfront.net/avatars/uuid.ext
+          oldKey = new URL(oldImageUrl).pathname.slice(1)
+        } else if (oldImageUrl.includes("amazonaws.com")) {
+          // Extract key from S3 URL: https://bucket.s3.region.amazonaws.com/avatars/uuid.ext
+          oldKey = oldImageUrl.split(".com/")[1]
+        }
+
         if (oldKey) {
           await s3Client.send(
             new DeleteObjectCommand({
@@ -66,7 +78,6 @@ export async function uploadAvatarAction(formData: FormData) {
           )
         }
       } catch (deleteError) {
-        // Log it, but don't fail the action. We already have the new URL!
         console.error(
           "Non-critical: Failed to delete old S3 object",
           deleteError
