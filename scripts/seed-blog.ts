@@ -4,6 +4,7 @@ import { category, post } from "@/db/blog-schema"
 async function seed() {
   console.log("🌱 Seeding production-grade blog data...")
 
+  // 1. Ensure we have an author to attach these posts to
   const existingUser = await db.query.user.findFirst()
 
   if (!existingUser) {
@@ -14,6 +15,12 @@ async function seed() {
   }
 
   try {
+    // 2. IMPORTANT: Clean up existing data to prevent duplicate key crashes
+    console.log("🧹 Clearing old seed data...")
+    await db.delete(post) // Delete children (posts) first to satisfy foreign key constraints
+    await db.delete(category)
+
+    // 3. Create Categories
     console.log("📂 Creating categories...")
     const [engineering, product, tutorials] = await db
       .insert(category)
@@ -41,7 +48,9 @@ async function seed() {
       .returning()
 
     console.log("📝 Creating long-form articles...")
-    await db.insert(post).values([
+
+    // 4. Define the 3 high-quality "Hero" posts
+    const heroPosts = [
       {
         id: crypto.randomUUID(),
         title: "Why We Bet on the Edge with Neon Postgres",
@@ -203,9 +212,50 @@ export function LoginButton() {
 By owning your auth infrastructure, you get to offer enterprise-grade features like Passkeys without paying Auth0 a premium tier subscription!
         `.trim(),
       },
-    ])
+    ]
 
-    console.log("✅ Seeding complete! You now have a fully populated blog.")
+    // 5. Dynamically generate 47 filler posts
+    const allCategories = [engineering, product, tutorials]
+
+    const fillerPosts = Array.from({ length: 47 }).map((_, index) => {
+      const postNumber = index + 4 // Start naming at 4
+      const category = allCategories[index % 3] // Round-robin through categories
+
+      return {
+        id: crypto.randomUUID(),
+        title: `Scaling SaaS Architectures: Lesson ${postNumber}`,
+        logline: `Exploring performance optimization pattern #${postNumber} for modern web applications.`,
+        excerpt: `A brief look into how implementing strategy ${postNumber} can drastically improve your application's reliability and user experience.`,
+        slug: `scaling-saas-architectures-lesson-${postNumber}`,
+        published: true,
+        authorId: existingUser.id,
+        categoryId: category.id,
+        content: `
+Welcome to lesson ${postNumber} in our ongoing series about building robust applications.
+
+### The Core Concept
+
+As your boilerplate scales, managing state and performance becomes critical. Pattern ${postNumber} addresses the common pitfalls developers face when writing complex server-side logic.
+
+\`\`\`typescript
+// Example implementation for Pattern ${postNumber}
+export async function optimizeData() {
+  console.log("Running optimization ${postNumber}...");
+  return { status: "optimized", id: ${postNumber} };
+}
+\`\`\`
+
+By implementing these strategies, you ensure your architecture remains highly available.
+        `.trim(),
+      }
+    })
+
+    // 6. Insert all 50 posts into Neon in one efficient batch query
+    await db.insert(post).values([...heroPosts, ...fillerPosts])
+
+    console.log(
+      "✅ Seeding complete! You now have a fully populated blog with 50 posts."
+    )
   } catch (error) {
     console.error("❌ Error during seeding:", error)
     process.exit(1)
