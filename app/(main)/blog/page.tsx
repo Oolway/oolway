@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: siteConfig.seo.metaData.blog.description,
 }
 
-export const revalidate = siteConfig.blog.feedRevalidateSeconds
+export const revalidate = siteConfig.blog.feedRevalidateSeconds as number
 
 export default async function BlogPage() {
   const { posts, nextCursor, hasMore } = await getPosts()
