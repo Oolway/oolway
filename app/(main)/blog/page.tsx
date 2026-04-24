@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: siteConfig.seo.metaData.blog.description,
 }
 
-export const revalidate = siteConfig.blog.feedRevalidateSeconds as number
+export const revalidate = 3600 // Revalidate this page every 60 minutes (ISR)
 
 export default async function BlogPage() {
   const { posts, nextCursor, hasMore } = await getPosts()

@@ -26,7 +26,6 @@ export const siteConfig = {
   },
 
   blog: {
-    feedRevalidateSeconds: 3600,
     pageHeading: `${BRANDNAME} Blog`,
     pageSubHeading:
       "Dispatches on product, performance, and scaling at the edge.",
