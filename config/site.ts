@@ -25,6 +25,13 @@ export const siteConfig = {
     avatarSizeLimitInMB: 5,
   },
 
+  blog: {
+    feedRevalidateSeconds: 3600,
+    pageHeading: `${BRANDNAME} Blog`,
+    pageSubHeading:
+      "Dispatches on product, performance, and scaling at the edge.",
+  },
+
   emails: {
     genericUser: "User",
     support: {

@@ -5,6 +5,7 @@ import { getPosts, type PostWithRelations } from "@/actions/get-posts"
 import { PostCard } from "@/app/(main)/blog/components/post-card"
 import { PostCardSkeletonGrid } from "@/app/(main)/blog/components/post-card-skeleton"
 import { Loader2 } from "lucide-react"
+import { BackToTop } from "@/app/(main)/blog/components/back-to-top"
 
 interface BlogFeedProps {
   initialPosts: PostWithRelations[]
@@ -128,9 +129,10 @@ export function BlogFeed({
       {/* No more posts */}
       {!hasMore && !isPending && posts.length > 0 && (
         <p className="text-center text-sm text-muted-foreground py-4">
-          You&apos;ve reached the end.
+          You&rsquo;ve reached the end.
         </p>
       )}
+      <BackToTop />
     </div>
   )
 }

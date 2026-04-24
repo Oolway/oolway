@@ -35,6 +35,7 @@ export const post = pgTable(
   (table) => [
     index("post_authorId_idx").on(table.authorId),
     index("post_categoryId_idx").on(table.categoryId),
+    index("post_createdAt_idx").on(table.createdAt),
   ]
 )
 

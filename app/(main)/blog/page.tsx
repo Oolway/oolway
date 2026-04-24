@@ -8,13 +8,16 @@ export const metadata: Metadata = {
   description: siteConfig.seo.metaData.blog.description,
 }
 
+export const revalidate = siteConfig.blog.feedRevalidateSeconds
+
 export default async function BlogPage() {
   const { posts, nextCursor, hasMore } = await getPosts()
 
   return (
-    <section className="flex flex-col gap-20 py-16 mx-auto">
-      <header className="font-bold text-6xl text-foreground text-center">
-        <h1>Minimal Blog</h1>
+    <section className="flex flex-col gap-20 mx-auto">
+      <header className="font-bold text-foreground text-center space-y-4">
+        <h1 className="text-6xl">{siteConfig.blog.pageHeading}</h1>
+        <h2 className="text-4xl">{siteConfig.blog.pageSubHeading}</h2>
       </header>
 
       <BlogFeed
