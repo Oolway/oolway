@@ -11,7 +11,7 @@ export const mdxComponents = {
   ),
   Signature: () => (
     <div className="mt-12 pt-8 border-t border-muted italic text-sm text-muted-foreground">
-      Sent from Oolway HQ.
+      Written by the {siteConfig.brand.name} Editorial Team.
     </div>
   ),
 }
