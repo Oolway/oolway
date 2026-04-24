@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 15
 
     env:
+      NODE_OPTIONS: "--no-warnings"
+      FORCE_COLOR: true
       CI: true
       NEXT_PUBLIC_APP_URL: http://localhost:3000
       BETTER_AUTH_URL: http://localhost:3000

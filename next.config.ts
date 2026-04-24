@@ -2,14 +2,18 @@ import { env } from "@/env"
 import { withSentryConfig } from "@sentry/nextjs"
 import type { NextConfig } from "next"
 
-// 1. Read the host variable (fallback to US if missing)
+// Read the host variable (fallback to US if missing)
 const posthogHost = env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
 
-// 2. Dynamically construct the asset host by injecting "-assets" into the domain string
+// Dynamically construct the asset host by injecting "-assets" into the domain string
 const posthogAssetHost = posthogHost.replace(
   ".i.posthog.com",
   "-assets.i.posthog.com"
 )
+
+// Bypass Sentry uploads in CI or if the boilerplate’s dummy token is still in use.
+const hasSentryToken =
+  !!process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_AUTH_TOKEN !== "dummy"
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -44,9 +48,11 @@ export default withSentryConfig(nextConfig, {
   silent: !process.env.CI,
   // Skip source map uploads and release creation in CI — SENTRY_AUTH_TOKEN is a dummy value there
   sourcemaps: {
-    disable:
-      !process.env.SENTRY_AUTH_TOKEN ||
-      process.env.SENTRY_AUTH_TOKEN === "dummy",
+    disable: !hasSentryToken,
+  },
+  release: {
+    create: hasSentryToken,
+    finalize: hasSentryToken,
   },
 
   // For all available options, see:
