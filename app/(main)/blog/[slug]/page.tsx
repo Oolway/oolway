@@ -3,7 +3,7 @@ import { formatDate } from "@/lib/date"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import { imageSizes } from "@/lib/image-sizes"
-import { MarkdownRenderer } from "@/components/markdown-renderer"
+import { MarkdownRenderer } from "@/components/markdown/markdown-renderer"
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>

@@ -31,6 +31,15 @@ export const siteConfig = {
       "Dispatches on product, performance, and scaling at the edge.",
   },
 
+  legal: {
+    grievance: {
+      officerName: "Amit Schandillia",
+      designation: "Grievance Officer",
+      workingHours: "Monday through Friday, 10:00 AM to 6:00 PM IST",
+      address: "Navi Mumbai, Maharashtra, India",
+    },
+  },
+
   emails: {
     genericUser: "User",
     support: {
@@ -53,6 +62,10 @@ export const siteConfig = {
     privacy: {
       sender: `${BRANDNAME} Privacy Officer`,
       toEmail: `privacy@${BRANDDOMAIN}`,
+    },
+    grievance: {
+      sender: `${BRANDNAME} Grievance Officer`,
+      toEmail: `grievance@${BRANDDOMAIN}`,
     },
   },
 
@@ -113,6 +126,18 @@ export const siteConfig = {
       cookies: {
         title: "Cookies",
         description: "Learn more about cookies.",
+      },
+      terms: {
+        title: "Terms",
+        description: "Learn more about our terms of service.",
+      },
+      privacy: {
+        title: "Privacy",
+        description: "Learn more about our privacy policy.",
+      },
+      grievance: {
+        title: "Grievance",
+        description: "Learn more about our grievance redressal policy.",
       },
     },
   },

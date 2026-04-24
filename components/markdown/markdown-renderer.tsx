@@ -1,8 +1,9 @@
-import React from "react"
+import React, { ComponentPropsWithoutRef } from "react"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { siteConfig } from "@/config/site"
 import remarkGfm from "remark-gfm"
 import remarkSupersub from "remark-supersub"
+import remarkAbbr from "@syenchuk/remark-abbr"
 
 // 1. Define your custom components locally
 const mdxComponents = {
@@ -15,6 +16,18 @@ const mdxComponents = {
     <div className="mt-12 pt-8 border-t border-muted italic text-sm text-muted-foreground">
       Written by the {siteConfig.brand.name} Editorial Team.
     </div>
+  ),
+  abbr: (props: ComponentPropsWithoutRef<"abbr">) => (
+    <abbr
+      {...props}
+      className="underline decoration-dotted cursor-help decoration-muted-foreground/50 underline-offset-4"
+    />
+  ),
+  a: (props: ComponentPropsWithoutRef<"a">) => (
+    <a
+      {...props}
+      className="text-muted-foreground no-underline hover:underline [font-weight:inherit]"
+    />
   ),
 }
 
@@ -34,6 +47,7 @@ export function MarkdownRenderer({ source }: MarkdownRendererProps) {
           remarkPlugins: [
             [remarkGfm, { singleTilde: false }], // Handles Tables, Strikethrough, Autolinks
             remarkSupersub, // Handles BOTH ^superscript^ and ~subscript~
+            remarkAbbr,
           ],
         },
       }}
