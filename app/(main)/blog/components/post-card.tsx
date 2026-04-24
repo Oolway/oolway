@@ -1,0 +1,34 @@
+import Link from "next/link"
+import type { PostWithRelations } from "@/actions/get-posts"
+
+export function PostCard({ post }: { post: PostWithRelations }) {
+  return (
+    <article className="flex flex-col gap-4 p-6 border rounded-xl hover:bg-muted/50 transition-colors">
+      {post.category && (
+        <span className="text-sm font-medium text-primary">
+          {post.category.name}
+        </span>
+      )}
+
+      <Link href={`/blog/${post.slug}`}>
+        <h2 className="text-2xl font-bold hover:underline">{post.title}</h2>
+      </Link>
+
+      {post.excerpt && (
+        <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
+      )}
+
+      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-auto pt-4 border-t">
+        <span>{post.author.name}</span>
+        <span>•</span>
+        <time dateTime={post.createdAt.toISOString()}>
+          {post.createdAt.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </time>
+      </div>
+    </article>
+  )
+}
