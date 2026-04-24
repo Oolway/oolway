@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 import { toast } from "react-hot-toast"
 import { authClient } from "@/lib/auth/auth-client"
+import { nameSchema } from "@/lib/validations/name-schema"
 
 interface EditableNameProps {
   initialName: string
@@ -30,22 +31,38 @@ export function EditableName({ initialName }: EditableNameProps) {
   }
 
   const handleSave = async () => {
-    if (name.trim() === "" || name === initialName) {
+    const trimmedNewName = name.trim()
+
+    // Check 1: Is old name same as trim(new name)?
+    if (trimmedNewName === initialName) {
+      setName(initialName) // Restore old name (wipes any trailing spaces from UI)
       setIsEditing(false)
       return
     }
 
+    // Check 2: Does new name pass Zod validation?
+    // We pass the trimmed name to Zod so it doesn't have to guess
+    const validation = nameSchema.safeParse(trimmedNewName)
+
+    if (!validation.success) {
+      toast.error(validation.error.issues[0].message)
+      setName(initialName) // Restore old name
+      setIsEditing(false) // Exit edit mode
+      return
+    }
+
+    // If yes: update UI with new name and call BetterAuth
+    const safeName = validation.data
+    setName(safeName)
     setIsEditing(false)
 
-    // 2. Use BetterAuth's built-in update method instead of your custom action
-    // This updates the DB AND refreshes the session cookie automatically
     const { error } = await authClient.updateUser({
-      name: name,
+      name: safeName,
     })
 
     if (error) {
       toast.error(error.message || "Failed to update profile")
-      setName(initialName)
+      setName(initialName) // Rollback UI if DB fails
       return
     }
 
