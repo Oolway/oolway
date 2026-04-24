@@ -2,16 +2,9 @@ import { getPostBySlug } from "@/actions/get-post-by-slug"
 import { formatDate } from "@/lib/date"
 import { notFound } from "next/navigation"
 import { MDXRemote } from "next-mdx-remote/rsc"
-
-const mdxComponents = {
-  h1: (props: any) => <h1 {...props} className="text-3xl font-bold my-4" />,
-  // You can even add your own custom components here!
-  Callout: ({ children }: { children: React.ReactNode }) => (
-    <div className="p-4 bg-primary/10 border-l-4 border-primary my-6 rounded">
-      {children}
-    </div>
-  ),
-}
+import { mdxComponents } from "@/components/mdx-components"
+import Image from "next/image"
+import { imageSizes } from "@/lib/image-sizes"
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -52,10 +45,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* If you have a featured image */}
       {post.coverImage && (
         <div className="relative aspect-video mb-10 overflow-hidden rounded-xl border">
-          <img
+          <Image
             src={post.coverImage}
             alt={post.title}
-            className="object-cover w-full h-full"
+            fill
+            priority
+            sizes={imageSizes.hero}
+            className="object-cover"
           />
         </div>
       )}
