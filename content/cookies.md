@@ -1,4 +1,4 @@
-**Last revised on {{LAST_REVISED_DATE}}**
+**Last revised {{LAST_REVISED_DATE}}**
 
 ## Cookie Policy
 

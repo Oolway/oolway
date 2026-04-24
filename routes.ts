@@ -24,7 +24,7 @@ export const publicRoutes = new Set([
   "/robots.txt",
   "/sitemap.xml",
   "/manifest.json",
-  ...(siteConfig.observability.sentry.enabled ? ["/monitoring"] : []),
+  ...(siteConfig.monitoring.sentry.enabled ? ["/monitoring"] : []),
 ])
 
 export const authRoutes = new Set(["/login"])

@@ -117,7 +117,14 @@ export const siteConfig = {
     },
   },
 
-  observability: {
+  analytics: {
+    postHog: {
+      enabled: true,
+      capturePageviews: true,
+    },
+  },
+
+  monitoring: {
     sentry: {
       enabled: false,
       tracesSampleRate: 1.0,
@@ -125,7 +132,6 @@ export const siteConfig = {
       replaysOnErrorSampleRate: 1.0,
       sendDefaultPii: true,
     },
-    enablePostHog: true,
   },
 
   security: {

@@ -1,9 +1,9 @@
 import { siteConfig } from "@/config/site"
 import type { Metadata } from "next"
-import ReactMarkdown from "react-markdown"
 import { readFile } from "fs/promises"
 import path from "path"
 import { CookiePreferences } from "@/app/(main)/cookies/components/cookie-preferences"
+import { MarkdownRenderer } from "@/components/markdown-renderer"
 
 export const metadata: Metadata = {
   title: siteConfig.seo.metaData.cookies.title,
@@ -22,7 +22,7 @@ export default async function CookiesPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-12">
       <article className="prose prose-neutral dark:prose-invert max-w-none">
-        <ReactMarkdown>{content}</ReactMarkdown>
+        <MarkdownRenderer source={content} />
       </article>
 
       <CookiePreferences />

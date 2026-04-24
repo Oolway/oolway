@@ -1,10 +1,9 @@
 import { getPostBySlug } from "@/actions/get-post-by-slug"
 import { formatDate } from "@/lib/date"
 import { notFound } from "next/navigation"
-import { MDXRemote } from "next-mdx-remote/rsc"
-import { mdxComponents } from "@/components/mdx-components"
 import Image from "next/image"
 import { imageSizes } from "@/lib/image-sizes"
+import { MarkdownRenderer } from "@/components/markdown-renderer"
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -58,7 +57,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* The main content area */}
       <div className="prose prose-neutral dark:prose-invert max-w-none leading-relaxed">
-        <MDXRemote source={post.content} components={mdxComponents} />
+        <MarkdownRenderer source={post.content} />
       </div>
     </article>
   )
