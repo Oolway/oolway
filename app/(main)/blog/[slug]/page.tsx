@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {post.author.name}
             </Link>
           </span>
-          <span>•</span>
+          <span className="text-neutral-400">|</span>
           <span className="space-x-1">
             <time dateTime={post.createdAt.toISOString()}>
               {formatDate(post.createdAt)}

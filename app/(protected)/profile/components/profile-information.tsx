@@ -43,7 +43,7 @@ export function ProfileInformation({ user }: ProfileInformationProps) {
                 <EditableName initialName={defaultName} />
                 <EditableUsername initialUsername={user.username ?? ""} />{" "}
                 {/* ✅ added */}
-                <p className="text-center text-sm text-neutral-500 dark:text-neutral-400 md:text-left">
+                <p className="text-center text-sm text-neutral-400 md:text-left">
                   {user.email}
                 </p>
               </div>

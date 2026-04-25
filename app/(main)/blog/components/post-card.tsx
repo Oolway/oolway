@@ -22,10 +22,13 @@ export function PostCard({ post }: { post: PostWithRelations }) {
       )}
 
       <div className="flex items-center gap-2 text-sm text-muted-foreground mt-auto pt-4 border-t">
-        <Link href={`/blog/author/${post.author.username}`}>
+        <Link
+          href={`/blog/author/${post.author.username}`}
+          className="text-primary"
+        >
           {post.author.name}
         </Link>
-        <span>•</span>
+        <span className="text-neutral-400">|</span>
         <time dateTime={post.createdAt.toISOString()}>
           {post.createdAt.toLocaleDateString("en-US", {
             month: "long",
