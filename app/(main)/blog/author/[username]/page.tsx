@@ -26,7 +26,7 @@ export const revalidate = 3600
 
 export default async function AuthorPage({ params }: AuthorPageProps) {
   const { username } = await params
-  const { posts, nextCursor, hasMore, authorName } =
+  const { posts, nextCursor, hasMore, authorName, authorBio } =
     await getPostsByAuthor(username)
 
   if (!authorName) notFound()
@@ -38,7 +38,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         <header className="font-bold text-foreground text-center space-y-4">
           <h1 className="text-4xl/tight md:text-6xl">{authorName}</h1>
           <h2 className="text-2xl/tight md:text-4xl text-muted-foreground">
-            All posts by this author
+            {authorBio ?? `All posts by ${authorName}`}
           </h2>
         </header>
 

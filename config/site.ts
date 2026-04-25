@@ -22,6 +22,12 @@ export const siteConfig = {
   },
   users: {
     defaultName: "User",
+    maxNameLength: 100,
+    minNameLength: 2,
+    maxUsernameLength: 30,
+    minUsernameLength: 3,
+    maxBioLength: 160,
+    minBioLength: 10,
   },
 
   uploads: {

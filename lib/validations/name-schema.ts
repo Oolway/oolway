@@ -1,10 +1,14 @@
+import { siteConfig } from "@/config/site"
 import * as z from "zod"
+
+const MAX_NAME_LENGTH = siteConfig.users.maxNameLength
+const MIN_NAME_LENGTH = siteConfig.users.minNameLength
 
 export const nameSchema = z
   .string()
   .trim()
-  .min(2, "Name must be at least 2 characters")
-  .max(100, "Name cannot exceed 100 characters")
+  .min(MIN_NAME_LENGTH, `Name must be at least {MIN_NAME_LENGTH} characters`)
+  .max(MAX_NAME_LENGTH, `Name cannot exceed {MAX_NAME_LENGTH} characters`)
   .regex(
     // \p{L} = Any letter in any language
     // \s = Spaces

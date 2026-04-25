@@ -1,4 +1,5 @@
 import { ProtectedPageTitle } from "@/app/(protected)/components/protected-page-title"
+import { BioCard } from "@/app/(protected)/profile/components/bio-card"
 import { ProfileInformation } from "@/app/(protected)/profile/components/profile-information"
 import { siteConfig } from "@/config/site"
 import { getServerSession } from "@/lib/auth/get-server-session"
@@ -22,6 +23,7 @@ export default async function ProfilePage() {
     <div className="container space-y-5">
       <ProtectedPageTitle title="Profile" />
       <ProfileInformation user={user} />
+      <BioCard initialBio={session.user.bio ?? null} />
     </div>
   )
 }

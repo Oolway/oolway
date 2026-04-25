@@ -27,6 +27,11 @@ export const auth = betterAuth({
         input: true,
         unique: true,
       },
+      bio: {
+        type: "string",
+        required: false,
+        input: true,
+      },
     },
   },
   session: {

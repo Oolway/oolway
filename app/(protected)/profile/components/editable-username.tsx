@@ -6,16 +6,7 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 import { toast } from "react-hot-toast"
 import { authClient } from "@/lib/auth/auth-client"
-import { z } from "zod"
-
-const usernameSchema = z
-  .string()
-  .min(3, "Username must be at least 3 characters")
-  .max(30, "Username must be under 30 characters")
-  .regex(
-    /^[a-z0-9_]+$/,
-    "Only lowercase letters, numbers, and underscores allowed"
-  )
+import { usernameSchema } from "@/lib/validations/username-schema"
 
 interface EditableUsernameProps {
   initialUsername: string
