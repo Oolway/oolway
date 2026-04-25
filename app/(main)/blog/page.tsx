@@ -31,7 +31,7 @@ export default async function BlogPage() {
         </h2>
         {isAdmin && (
           <Button asChild size="lg">
-            <Link href="/admin/blog/new">
+            <Link href="/blog/new">
               <PlusIcon className="size-4" />
               Add Post
             </Link>
