@@ -1,4 +1,5 @@
 import { env } from "@/env"
+import { title } from "process"
 
 const BRANDNAME = "Oolway"
 const BRANDDOMAIN = "oolway.com"
@@ -146,6 +147,10 @@ export const siteConfig = {
       grievance: {
         title: "Grievance",
         description: "Learn more about our grievance redressal policy.",
+      },
+      admin: {
+        title: "Admin",
+        description: "Manage your account.",
       },
     },
   },

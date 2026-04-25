@@ -6,14 +6,21 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { LayoutDashboardIcon, LogOutIcon, SettingsIcon } from "lucide-react"
+import {
+  LayoutDashboardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  ShieldIcon,
+} from "lucide-react"
 import { usePathname } from "next/navigation"
 import { UserInfo } from "@/components/auth/user-info"
+import { ROLES } from "@/lib/auth/roles"
 
 interface UserDropdownContentProps {
   user: {
     name?: string | null
     email?: string | null
+    role?: string | null
   }
   onSignOut: () => void
   variant?: "navbar" | "sidebar"
@@ -62,6 +69,15 @@ export function UserDropdownContent({
           </DropdownMenuItem>
         )
       })}
+
+      {user.role === ROLES.ADMIN && (
+        <DropdownMenuItem asChild className={baseItemClass}>
+          <Link href="/admin" className="flex items-center gap-2">
+            <ShieldIcon className="size-4" />
+            <span>Admin</span>
+          </Link>
+        </DropdownMenuItem>
+      )}
 
       <DropdownMenuSeparator />
 
