@@ -20,6 +20,9 @@ export const siteConfig = {
     logOutEverywhereInstantly: true,
     enableSessionWatcher: true,
   },
+  users: {
+    defaultName: "User",
+  },
 
   uploads: {
     avatarSizeLimitInMB: 5,
@@ -41,7 +44,6 @@ export const siteConfig = {
   },
 
   emails: {
-    genericUser: "User",
     support: {
       sender: `Team ${BRANDNAME}`,
       email: "onboarding@resend.dev",

@@ -5,50 +5,27 @@ import { User } from "@/lib/auth/auth"
 import { ShieldIcon, CalendarIcon, ClockIcon } from "lucide-react"
 import { EditableAvatar } from "@/app/(protected)/profile/components/editable-avatar"
 import { EditableName } from "@/app/(protected)/profile/components/editable-name"
+import { EditableUsername } from "@/app/(protected)/profile/components/editable-username"
 import { siteConfig } from "@/config/site"
 import { formatDate, formatRelativeTime } from "@/lib/date"
+import { InfoRow } from "@/app/(protected)/profile/components/info-row"
 
 interface ProfileInformationProps {
   user: User
 }
 
-function InfoRow({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: React.ElementType
-  label: string
-  value: React.ReactNode
-}) {
-  return (
-    <div className="flex items-start gap-3">
-      <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center">
-        <Icon className="size-4 text-muted-foreground" aria-hidden="true" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {label}
-        </p>
-        <div className="mt-0.5 text-sm font-medium">{value}</div>
-      </div>
-    </div>
-  )
-}
-
 export function ProfileInformation({ user }: ProfileInformationProps) {
-  const defaultName = user.name || siteConfig.emails.genericUser
+  const defaultName = user.name || siteConfig.users.defaultName
 
   return (
     <div className="space-y-6">
       <Card className="max-w-2xl border-muted/60 shadow-xs">
         <CardContent className="p-6 md:p-10">
-          <div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-12">
+          <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-12">
             {/* Left Column: Avatar & Badge */}
-            <div className="flex shrink-0 flex-col items-center gap-4">
+            <div className="flex shrink-0 flex-col items-center gap-4 md:self-center">
               <EditableAvatar
                 user={user}
-                // We move the ring/border logic directly into the component
                 className="size-36 md:size-60 ring-4 ring-foreground/40 rounded-full"
               />
             </div>
@@ -64,7 +41,9 @@ export function ProfileInformation({ user }: ProfileInformationProps) {
                   </Badge>
                 )}
                 <EditableName initialName={defaultName} />
-                <p className="text-center text-base text-muted-foreground md:text-left">
+                <EditableUsername initialUsername={user.username ?? ""} />{" "}
+                {/* ✅ added */}
+                <p className="text-center text-sm text-neutral-500 dark:text-neutral-400 md:text-left">
                   {user.email}
                 </p>
               </div>

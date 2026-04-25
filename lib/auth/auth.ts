@@ -21,6 +21,12 @@ export const auth = betterAuth({
         required: true,
         input: false,
       },
+      username: {
+        type: "string",
+        required: true,
+        input: true,
+        unique: true,
+      },
     },
   },
   session: {
@@ -41,6 +47,24 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
+        before: async (user) => {
+          const prefix = user.email
+            .split("@")[0]
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "_")
+            .slice(0, 20)
+
+          const suffix = Math.random().toString(36).slice(2, 6)
+          const username = `${prefix}_${suffix}`
+
+          return {
+            data: {
+              ...user,
+              username,
+              name: user.name || siteConfig.users.defaultName,
+            },
+          }
+        },
         after: async (user) => {
           await sendEmail({
             to: user.email,
